@@ -1,6 +1,6 @@
-# Restho - Restaurant Website (React Version)
+# Multimodal AI Assistant
 
-A modern, responsive restaurant website built with React.js featuring a dark theme with gold accents.
+A React and Vite frontend with a FastAPI backend for chatting with an AI assistant, uploading documents, and analyzing images with vision-language models.
 
 ## Project Structure
 
