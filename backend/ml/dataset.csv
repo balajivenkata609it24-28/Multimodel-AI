@@ -1,0 +1,53 @@
+text,intent
+"hello",greeting
+"hi",greeting
+"hey there",greeting
+"good morning",greeting
+"good afternoon",greeting
+"how are you",greeting
+"what can you do",capabilities
+"what are your capabilities",capabilities
+"what can you help me with",capabilities
+"tell me what you can do",capabilities
+"what is this system",capabilities
+"help me",general_help
+"I need help",general_help
+"can you help me",general_help
+"I have a question",general_help
+"please assist me",general_help
+"analyze this image",image_analysis
+"what is in this image",image_analysis
+"describe this picture",image_analysis
+"tell me about this image",image_analysis
+"what do you see in the image",image_analysis
+"identify the objects in this image",image_analysis
+"read the text in this image",image_ocr
+"extract text from this image",image_ocr
+"perform OCR on this image",image_ocr
+"what does the image say",image_ocr
+"read this picture",image_ocr
+"analyze this chart",chart_analysis
+"explain this graph",chart_analysis
+"what does this chart show",chart_analysis
+"interpret this graph",chart_analysis
+"analyze the graph",chart_analysis
+"explain this document",document_question
+"summarize this document",document_question
+"what is in this PDF",document_question
+"analyze this PDF",document_question
+"help me understand this document",document_question
+"summarize the uploaded file",document_question
+"explain this text file",document_question
+"what is machine learning",general_question
+"explain artificial intelligence",general_question
+"what is deep learning",general_question
+"explain neural networks",general_question
+"what is Python",general_question
+"tell me about computer vision",general_question
+"thank you",thanks
+"thanks",thanks
+"thank you very much",thanks
+"that's helpful",thanks
+"bye",goodbye
+"goodbye",goodbye
+"see you later",goodbye
