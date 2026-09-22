@@ -1,18 +1,27 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { Brain, Mail, Lock, Loader2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Brain, Mail, Phone, Lock, Loader2 } from 'lucide-react';
 
 const Login = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
+  const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (!email || !password) {
-      setError('Please fill in all fields.');
+    const value = identifier.trim();
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phonePattern = /^\+?[\d\s()-]{7,}$/;
+
+    if (!value || !password) {
+      setError('Enter your email or phone number and password.');
+      return;
+    }
+
+    if (!emailPattern.test(value) && !phonePattern.test(value)) {
+      setError('Enter a valid email address or phone number.');
       return;
     }
     
@@ -20,10 +29,9 @@ const Login = () => {
     setError('');
 
     // Mock authentication delay
-    setTimeout(() => {
-      setLoading(false);
-      navigate('/app/chat');
-    }, 1200);
+    localStorage.setItem('vlm_authenticated', 'true');
+    setLoading(false);
+    navigate('/', { replace: true });
   };
 
   return (
@@ -32,7 +40,7 @@ const Login = () => {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      background: 'radial-gradient(circle at 50% 50%, rgba(37, 99, 235, 0.08) 0%, transparent 50%), var(--bg-primary)',
+      background: 'radial-gradient(circle at 50% 50%, rgba(205, 166, 120, 0.2) 0%, transparent 50%), var(--bg-primary)',
       padding: '20px'
     }}>
       <div className="glass-panel" style={{
@@ -47,7 +55,7 @@ const Login = () => {
           <Brain size={24} />
         </div>
         
-        <h2 style={{ fontFamily: 'var(--font-title)', fontSize: '1.5rem', marginBottom: '8px' }}>Welcome Back</h2>
+          <h2 style={{ fontFamily: 'var(--font-title)', fontSize: '1.5rem', marginBottom: '8px' }}>Welcome Back</h2>
         <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '30px', textAlign: 'center' }}>
           Sign in to access your VLM Multimodal Assistant dashboard.
         </p>
@@ -56,7 +64,7 @@ const Login = () => {
           <div style={{
             background: 'rgba(239, 68, 68, 0.15)',
             border: '1px solid rgba(239, 68, 68, 0.3)',
-            color: '#f87171',
+            color: '#a44332',
             padding: '10px 14px',
             borderRadius: '6px',
             fontSize: '0.85rem',
@@ -69,21 +77,26 @@ const Login = () => {
 
         <form onSubmit={handleLogin} style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '20px' }}>
           <div className="setting-control">
-            <label style={{ fontSize: '0.8rem' }}>Email Address</label>
+            <label style={{ fontSize: '0.8rem' }}>Email or phone number</label>
             <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
-              <Mail size={16} className="text-dark" style={{ position: 'absolute', left: '12px' }} />
+              {identifier.includes('@') ? (
+                <Mail size={16} className="text-dark" style={{ position: 'absolute', left: '12px' }} />
+              ) : (
+                <Phone size={16} className="text-dark" style={{ position: 'absolute', left: '12px' }} />
+              )}
               <input 
                 type="text" 
-                placeholder="you@example.com" 
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com or +1 555 123 4567" 
+                value={identifier}
+                onChange={(e) => setIdentifier(e.target.value)}
+                autoComplete="username"
                 style={{
                   width: '100%',
                   background: 'var(--bg-input)',
                   border: '1px solid var(--border-color)',
                   borderRadius: '8px',
                   padding: '12px 14px 12px 38px',
-                  color: 'white',
+                  color: 'var(--text-main)',
                   outline: 'none',
                   fontSize: '0.9rem'
                 }}
@@ -97,16 +110,17 @@ const Login = () => {
               <Lock size={16} className="text-dark" style={{ position: 'absolute', left: '12px' }} />
               <input 
                 type="password" 
-                placeholder="••••••••" 
+                placeholder="Enter your password" 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                autoComplete="current-password"
                 style={{
                   width: '100%',
                   background: 'var(--bg-input)',
                   border: '1px solid var(--border-color)',
                   borderRadius: '8px',
                   padding: '12px 14px 12px 38px',
-                  color: 'white',
+                  color: 'var(--text-main)',
                   outline: 'none',
                   fontSize: '0.9rem'
                 }}
@@ -120,7 +134,7 @@ const Login = () => {
         </form>
 
         <div style={{ marginTop: '24px', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-          Don't have an account? <Link to="/" style={{ color: 'var(--primary)', fontWeight: '600' }}>Get Started</Link>
+          Sign in to enter your assistant workspace.
         </div>
       </div>
     </div>

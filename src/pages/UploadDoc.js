@@ -164,7 +164,7 @@ const UploadDoc = () => {
       setPreviewText(
         `Failed to upload and process the document.\n\nError: ${
           error.message || 'Unknown error'
-        }`
+        }` 
       );
 
       setFilePath('');

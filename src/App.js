@@ -16,16 +16,35 @@ import History from './pages/History';
 import Settings from './pages/Settings';
 import About from './pages/About';
 
+const isAuthenticated = () => localStorage.getItem('vlm_authenticated') === 'true';
+
+const ProtectedRoute = ({ children }) => {
+  return isAuthenticated() ? children : <Navigate to="/login" replace />;
+};
+
+const HomeRoute = () => {
+  return isAuthenticated() ? <Home /> : <Navigate to="/login" replace />;
+};
+
+const LoginRoute = () => {
+  return isAuthenticated() ? <Navigate to="/" replace /> : <Login />;
+};
+
 function App() {
   return (
     <Router>
       <Routes>
-        {/* Public Routes */}
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
+        <Route
+          path="/"
+          element={<HomeRoute />}
+        />
+        <Route
+          path="/login"
+          element={<LoginRoute />}
+        />
 
         {/* Dashboard/App Routes */}
-        <Route path="/app" element={<DashboardLayout />}>
+        <Route path="/app" element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
           <Route index element={<Navigate to="chat" replace />} />
           <Route path="chat" element={<Chat />} />
           <Route path="chat/:sessionId" element={<Chat />} />
